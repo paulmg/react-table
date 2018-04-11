@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types'
+import Immutable from 'immutable'
 
 export default {
   // General
-  data: PropTypes.array,
+  data: PropTypes.oneOfType([
+    PropTypes.instanceOf(Array),
+    PropTypes.instanceOf(Immutable.Iterable)
+  ]),
   loading: PropTypes.bool,
   showPagination: PropTypes.bool,
   showPaginationTop: PropTypes.bool,
