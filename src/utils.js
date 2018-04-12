@@ -1,5 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
+import Immutable from 'immutable'
 //
 export default {
   get,
@@ -29,7 +30,7 @@ function get (obj, path, def) {
   const pathObj = makePathArray(path)
   let val
   try {
-    val = pathObj.reduce((current, pathPart) => current[pathPart], obj)
+    val = Immutable.Iterable.isIterable(obj) ? obj.getIn(pathObj) : pathObj.reduce((current, pathPart) => current[pathPart], obj)
   } catch (e) {
     // continue regardless of error
   }

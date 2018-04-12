@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classnames from 'classnames'
+import Immutable from 'immutable'
 //
 import _ from './utils'
 import Lifecycle from './lifecycle'
@@ -137,7 +138,7 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
     const endRow = startRow + pageSize
     let pageRows = manual ? resolvedData : sortedData.slice(startRow, endRow)
     const minRows = this.getMinRows()
-    const padRows = _.range(Math.max(minRows - pageRows.length, 0))
+    const padRows = _.range(Math.max(minRows - Immutable.Iterable.isIterable(pageRows) ? pageRows.size : pageRows.length, 0))
 
     const hasColumnFooter = allVisibleColumns.some(d => d.Footer)
     const hasFilters = filterable || allVisibleColumns.some(d => d.filterable)
@@ -831,7 +832,7 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
           <TrComponent
             className={classnames(
               '-padRow',
-              (pageRows.length + i) % 2 ? '-even' : '-odd',
+              (Immutable.Iterable.isIterable(pageRows) ? pageRows.size : pageRows.length + i) % 2 ? '-even' : '-odd',
               trProps.className,
             )}
             style={trProps.style || {}}
@@ -991,7 +992,7 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
               {pagination}
             </div>
             : null}
-          {!pageRows.length &&
+          {!Immutable.Iterable.isIterable(pageRows) ? pageRows.size : pageRows.length &&
             <NoDataComponent {...noDataProps}>
               {_.normalizeComponent(noDataText)}
             </NoDataComponent>}

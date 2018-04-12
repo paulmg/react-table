@@ -1,3 +1,5 @@
+import Immutable from 'immutable'
+
 export default Base =>
   class extends Base {
     componentWillMount () {
@@ -109,7 +111,7 @@ export default Base =>
         newResolvedState.pages = newResolvedState.manual
           ? newResolvedState.pages
           : Math.ceil(
-            newResolvedState.sortedData.length / newResolvedState.pageSize,
+            Immutable.Iterable.isIterable(newResolvedState.sortedData) ? newResolvedState.data.size : newResolvedState.data.length / newResolvedState.pageSize,
           )
         newResolvedState.page = Math.max(
           newResolvedState.page >= newResolvedState.pages
