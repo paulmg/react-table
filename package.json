@@ -26,6 +26,7 @@
     "media/*.png"
   ],
   "scripts": {
+    "start": "budo main.js:build.js --dir ./ --verbose  --live -- -t babelify",
     "build:cjs": "babel src --out-dir lib --source-maps inline",
     "build:es": "BABEL_ENV=es babel src --out-dir es --source-maps inline",
     "build:umd": "BABEL_ENV=umd rollup -c",
@@ -43,6 +44,7 @@
     "docs:build": "yarn build && cd docs && yarn && yarn build"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
     "immutable": "^3.8.2"
   },
@@ -58,6 +60,9 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "babelify": "^8.0.0",
+    "browserify": "^16.2.0",
+    "budo": "^11.2.0",
     "eslint": "^4.1.1",
     "eslint-config-react-tools": "^1.0.10",
     "eslint-plugin-class-property": "^1.0.6",
