@@ -1,4 +1,5 @@
 import React from 'react'
+import Immutable from 'immutable'
 import _ from './utils'
 
 export default Base =>
@@ -28,7 +29,6 @@ export default Base =>
         groupedByPivotKey,
         SubComponent,
       } = newState
-
       // Determine Header Groups
       let hasHeaderGroups = false
       columns.forEach(column => {
@@ -151,7 +151,6 @@ export default Base =>
 
       // Find any custom pivot location
       const pivotIndex = visibleColumns.findIndex(col => col.pivot)
-
       // Handle Pivot Columns
       if (pivotBy.length) {
         // Retrieve the pivot columns in the correct pivot order
@@ -162,7 +161,6 @@ export default Base =>
             pivotColumns.push(found)
           }
         })
-
         const PivotParentColumn = pivotColumns.reduce(
           (prev, current) =>
             prev && prev === current.parentColumn && current.parentColumn,
@@ -229,7 +227,7 @@ export default Base =>
         const row = {
           [originalKey]: d,
           [indexKey]: i,
-          [subRowsKey]: d[subRowsKey],
+          [subRowsKey]: Immutable.Iterable.isIterable(d) ? d.get('subRowsKey') : d[subRowsKey],
           [nestingLevelKey]: level,
         }
         allDecoratedColumns.forEach(column => {

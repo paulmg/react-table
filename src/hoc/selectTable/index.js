@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import React from 'react';
+import Immutable from 'immutable'
 
 const defaultSelectInputComponent = (props) => {
   return (
@@ -74,7 +75,7 @@ export default (Component) => {
         id: '_selector',
         accessor: ()=>'x', // this value is not important
         Header: this.headSelector.bind(this),
-        Cell: (ci) => { return this.rowSelector.bind(this)(ci.original); },
+        Cell: (ci) => { return this.rowSelector.bind(this)(ci.original && Immutable.Iterable.isIterable(ci.original) ? ci.original.toJS() : ci.original); },
         width: selectWidth || 30,
         filterable: false,
         sortable: false,
